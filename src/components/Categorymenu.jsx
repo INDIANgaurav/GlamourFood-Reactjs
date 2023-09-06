@@ -1,43 +1,45 @@
-import React, { useEffect, useState } from 'react'
-import FoodData from '../data/FoodData'
+import React, { useEffect, useState } from "react";
+import FoodData from "../data/FoodData";
+import { setCategory } from "../redux/slices/CategorySlice";
+import { useDispatch, useSelector} from "react-redux"
 
-const Categorymenu = () => { 
+const Categorymenu = () => {
+  const [Categories, setCategories] = useState([]);
 
-const [Categories , setCategories ] = useState([])
+  const listUniqueCategories = () => {
+    const uniqueCategories = [
+      ...new Set(FoodData.map((food) => food.category)),
+    ];
+    setCategories(uniqueCategories);
+    console.log(uniqueCategories);
+  };
+  useEffect(() => {
+    listUniqueCategories();
+  }, []);
 
-const listUniqueCategories = () => {
-        const uniqueCategories = [
-                Set( FoodData.map( (food) => food.category ) )
-        ] ;
-        setCategories(uniqueCategories);
-}
-         useEffect( () => {
-                        console.log(Categories)
-         } , [])
-
-
+  const dispatch = useDispatch() ;
+  const selectedCategory = useSelector( state => state.category.category)
   return (
-    <div className='m-6'> 
-        <h3 className='text-xl font-semibold'> Find The Best Food</h3>
-        <div className='my-5 flex gap-3 overflow-x-scroll scroll-smooth lg:overflow-x-hidden '>
-            <button className='px-3 py-2 bg-gray-200 font-bold rounded-lg hover:bg-green-500 hover:text-white'>
-                    All
+    <div className="m-6">
+      <h3 className="text-xl font-semibold"> Find The Best Food</h3>
+      <div className="my-5 flex gap-3 overflow-x-scroll scroll-smooth lg:overflow-x-hidden ">
+      <button 
+            onClick={ () => dispatch(setCategory("All")) }
+             className={`px-3 py-2 bg-gray-200 font-bold rounded-lg hover:bg-green-500 hover:text-white ${selectedCategory === "All" && "bg-green-500 text-white "} `}>
+          All
             </button>
-            <button className='px-3 py-2 bg-gray-200 font-bold rounded-lg hover:bg-green-500 hover:text-white'>
-                    Lunch
+        {Categories.map((category, index) => {
+          return (
+            <button 
+            onClick={ () => dispatch(setCategory(category)) }
+            key={index} className={`px-3 py-2 bg-gray-200 font-bold rounded-lg hover:bg-green-500 hover:text-white  ${selectedCategory === category && "bg-green-500 text-white "}`} >
+           {category}
             </button>
-            <button className='px-3 py-2 bg-gray-200 font-bold rounded-lg hover:bg-green-500 hover:text-white'>
-                    BreakFast
-            </button>
-            <button className='px-3 py-2 bg-gray-200 font-bold rounded-lg hover:bg-green-500 hover:text-white'>
-                    Dinner
-            </button>
-            <button className='px-3 py-2 bg-gray-200 font-bold rounded-lg hover:bg-green-500 hover:text-white'>
-                    Snacks
-            </button>
-        </div>
+          );
+        })}
+      </div>
     </div>
-  )
-}
+  );
+};
 
-export default Categorymenu
+export default Categorymenu;
