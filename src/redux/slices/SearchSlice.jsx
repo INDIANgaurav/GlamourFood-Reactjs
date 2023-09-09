@@ -4,7 +4,7 @@ const SearchSlice = createSlice(
    {
     name : "search",
     initialState : {
-search:""
+    search:""
     } ,
 
     reducers : {

@@ -31,7 +31,7 @@ const Categorymenu = () => {
         {Categories.map((category, index) => {
           return (
             <button 
-            onClick={ () => dispatch(setCategory(category)) }
+            onClick={ () => dispatch(setCategory(category)) && console.log(category) }
             key={index} className={`px-3 py-2 bg-gray-200 font-bold rounded-lg hover:bg-green-500 hover:text-white  ${selectedCategory === category && "bg-green-500 text-white "}`} >
            {category}
             </button>

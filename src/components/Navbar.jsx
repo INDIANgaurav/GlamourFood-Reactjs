@@ -15,15 +15,17 @@ const Navbar = () => {
         <input
           type="search"
           name="search"
-          placeholder="Search Here..."
+          placeholder="Search Food....."
           autoComplete="off"
           onChange={(e) => {
             dispatch(setSearch(e.target.value))
+            // console.log("your target value " , e.target.value)
           }}
-          className="py-3 border-gray-400 text-sm rounded-lg outline-none w-full  lg:w-[25vw]"
+          className="py-3 border-gray-800  text-md  rounded-lg
+          outline-none w-full  lg:w-[25vw]"
         />
       </div>
-      <div></div>
+       
     </nav>
   );
 };
